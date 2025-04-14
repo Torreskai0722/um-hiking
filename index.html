@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>UM Hiking - Weekly Photo Archive</title>
+  <title>UM Hiking Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
@@ -30,17 +30,19 @@
     }
 
     .week-list {
-      max-width: 800px;
+      max-width: 900px;
       margin: 40px auto;
       padding: 0 20px;
     }
 
     .week-item {
       background: #fff;
+      display: flex;
+      align-items: center;
       border-radius: 10px;
-      padding: 15px 20px;
-      margin-bottom: 20px;
+      overflow: hidden;
       box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
       transition: box-shadow 0.2s ease;
     }
 
@@ -48,16 +50,51 @@
       box-shadow: 0 6px 10px rgba(0,0,0,0.1);
     }
 
-    .week-item a {
-      text-decoration: none;
-      color: #00274C;
+    .week-photo {
+      flex: 0 0 200px;
+      height: 130px;
+      overflow: hidden;
+    }
+
+    .week-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .week-info {
+      flex: 1;
+      padding: 15px 20px;
+    }
+
+    .week-info a {
       font-size: 1.2em;
+      font-weight: bold;
+      color: #00274C;
+      text-decoration: none;
+    }
+
+    .week-info p {
+      margin: 8px 0 0;
+      color: #555;
+    }
+
+    .contact {
+      text-align: center;
+      margin: 40px 20px;
+      font-size: 1em;
+      color: #333;
+    }
+
+    .contact a {
+      color: #00274C;
+      text-decoration: none;
       font-weight: bold;
     }
 
-    .week-item p {
-      margin: 5px 0 0;
-      color: #555;
+    .contact a:hover {
+      text-decoration: underline;
     }
 
     footer {
@@ -65,6 +102,23 @@
       font-size: 0.9em;
       color: #666;
       padding: 20px 10px;
+    }
+
+    @media (max-width: 600px) {
+      .week-item {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .week-photo {
+        width: 100%;
+        height: 200px;
+      }
+
+      .week-info {
+        padding: 15px;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -75,71 +129,128 @@
   <p>Weekly Photo Gallery · University of Michigan, Ann Arbor</p>
 </header>
 
-<h3>Google sheet for sign-up</h3>
-<p><a href="https://maps.app.goo.gl/GW4syhNAFKFVX4gf6?g_st=com.google.maps.preview.copy">Link</a></p>
+<div class="week-list">
 
-<section class="week-list">
+  <h3>📝 Google Sheet for Sign-Up</h3>
+  <p><a href="https://maps.app.goo.gl/GW4syhNAFKFVX4gf6?g_st=com.google.maps.preview.copy" target="_blank">Sign-Up Link</a></p>
 
   <div class="week-item">
-    <a href="https://drive.google.com/drive/folders/1cTfIm8-JgT7wx3wYTeDN9qMUqvqwPvte?usp=sharing" target="_blank">4/12/25: Highland Trail</a>
-    <p>April 12, 2025 — Highland State Park.</p>
-    <p>Length: 6.6 mile<p></p>
+    <div class="week-photo">
+      <img src="photos/week-0412.jpg" alt="Highland Trail">
+    </div>
+    <div class="week-info">
+      <a href="https://drive.google.com/drive/folders/1cTfIm8-JgT7wx3wYTeDN9qMUqvqwPvte?usp=sharing" target="_blank">4/12/25: Highland Trail</a>
+      <p>April 12, 2025 — Highland State Park.</p>
+      <p>Length: 6.6 mile</p>
+    </div>
   </div>
 
   <div class="week-item">
-    <a href="https://drive.google.com/drive/folders/1mE8kt5VMucW887EB-ail8woPmydQxfyP?usp=sharing" target="_blank">4/6/25: Ann Arbor Ramble Trail</a>
-    <p>April 6, 2025 — Ann Arbor Ramble Trail.</p>
-    <p>Length: 6 mile<p></p>
+    <div class="week-photo">
+      <img src="photos/week-0412.jpg" alt="Highland Trail">
+    </div>
+    <div class="week-info">
+      <a href="https://drive.google.com/drive/folders/1mE8kt5VMucW887EB-ail8woPmydQxfyP?usp=sharing" target="_blank">4/6/25: Ann Arbor Ramble Trail</a>
+      <p>April 6, 2025 — Ann Arbor Ramble Trail.</p>
+      <p>Length: 6 mile</p>
+    </div>
   </div>
 
   <div class="week-item">
-    <a href="https://drive.google.com/drive/folders/1AYnurnzURI7ReapPf2giHaebYj9RESWO?usp=sharing" target="_blank">3/29/25: Kent Lake Loop</a>
-    <p>March 29, 2025 — Kensington Metro Park.</p>
-    <p>Length: 8.5 mile<p></p>
+    <div class="week-photo">
+      <img src="photos/week-0412.jpg" alt="Highland Trail">
+    </div>
+    <div class="week-info">
+      <a href="https://drive.google.com/drive/folders/1AYnurnzURI7ReapPf2giHaebYj9RESWO?usp=sharing" target="_blank">3/29/25: Kent Lake Loop</a>
+      <p>March 29, 2025 — Kensington Metro Park.</p>
+      <p>Length: 8.5 mile</p>
+    </div>
   </div>
 
   <div class="week-item">
-    <a href="https://drive.google.com/drive/folders/1Oig0s4EvgJjiiHAxC2J09DN6mMo8uIlR?usp=sharing" target="_blank">3/22/25: Gosling Lake Trail</a>
-    <p>March 22, 2025 — Pinckney State Park.</p>
-    <p>Length: 9.5 km<p>
+    <div class="week-photo">
+      <img src="photos/week-0412.jpg" alt="Highland Trail">
+    </div>
+    <div class="week-info">
+      <a href="https://drive.google.com/drive/folders/1Oig0s4EvgJjiiHAxC2J09DN6mMo8uIlR?usp=sharing" target="_blank">3/22/25: Gosling Lake Trail</a>
+      <p>March 22, 2025 — Pinckney State Park.</p>
+      <p>Length: 9.5 km</p>
+    </div>
   </div>
 
   <div class="week-item">
-    <a href="https://drive.google.com/drive/folders/1fUrA9mDc3pecb5u7D5Duaolg_NdpCv_e?usp=sharing" target="_blank">3/8/25: Crooked Lake Trail</a>
-    <p>March 8, 2025 — Pinckney State Park.</p>
-    <p>Length: 4.4 mile<p>
+    <div class="week-photo">
+      <img src="photos/week-0412.jpg" alt="Highland Trail">
+    </div>
+    <div class="week-info">
+      <a href="https://drive.google.com/drive/folders/1fUrA9mDc3pecb5u7D5Duaolg_NdpCv_e?usp=sharing" target="_blank">3/8/25: Crooked Lake Trail</a>
+      <p>March 8, 2025 — Pinckney State Park.</p>
+      <p>Length: 4.4 mile</p>
+    </div>
   </div>
 
   <div class="week-item">
-    <a href="https://drive.google.com/drive/folders/1-dSDWZZcmaNIwXuZzEz2GE0U5Qn1uK-g?usp=sharing" target="_blank">2/22/25: Chain of Lakes Trail</a>
-    <p>Feburary 22, 2025 — Pinckney State Park.</p>
-    <p>Length: 10 km<p>
-  </div>
-  
-  <div class="week-item">
-    <a href="https://drive.google.com/drive/folders/1q_EerzQpGeczPx1aIBT2UUu83WVrerEk?usp=sharing" target="_blank">1/11/25: Chain of Lakes Trail</a>
-    <p>January 11, 2025 — Pinckney State Park.</p>
-    <p>Length: 8 mile<p>
-  </div>
-
-  <div class="week-item">
-    <a href="https://drive.google.com/drive/folders/1yp82SwD_rzK21XRtSXdzCQvTTyUjoct7?usp=sharing" target="_blank">12/7/24: Birds Hill Trail</a>
-    <p>December 7, 2024 — Birds Hill Nature Area.</p>
-    <p>Length: 4.5 mile<p>
+    <div class="week-photo">
+      <img src="photos/week-0412.jpg" alt="Highland Trail">
+    </div>
+    <div class="week-info">
+      <a href="https://drive.google.com/drive/folders/1-dSDWZZcmaNIwXuZzEz2GE0U5Qn1uK-g?usp=sharing" target="_blank">2/22/25: Chain of Lakes Trail</a>
+      <p>February 22, 2025 — Pinckney State Park.</p>
+      <p>Length: 10 km</p>
+    </div>
   </div>
 
   <div class="week-item">
-    <a href="https://drive.google.com/drive/folders/1VruI-JkrJ7jp_hCyhfYAgDn_KTKDJLIQ?usp=sharing" target="_blank">11/23/24: Penosha Trial</a>
-    <p>November 23, 2024 — Brighton State Park.</p>
-    <p>Length: 5 mile<p>
+    <div class="week-photo">
+      <img src="photos/week-0412.jpg" alt="Highland Trail">
+    </div>
+    <div class="week-info">
+      <a href="https://drive.google.com/drive/folders/1q_EerzQpGeczPx1aIBT2UUu83WVrerEk?usp=sharing" target="_blank">1/11/25: Chain of Lakes Trail</a>
+      <p>January 11, 2025 — Pinckney State Park.</p>
+      <p>Length: 8 mile</p>
+    </div>
   </div>
 
   <div class="week-item">
-    <a href="https://drive.google.com/drive/folders/1qTmspGu46ayDaBgNtVedAmHeRjh27i9J?usp=sharing" target="_blank">Previous</a>
-    <p>9/23 - 11/24 - State parks near Ann Arbor.</p>
+    <div class="week-photo">
+      <img src="photos/week-0412.jpg" alt="Highland Trail">
+    </div>
+    <div class="week-info">
+      <a href="https://drive.google.com/drive/folders/1yp82SwD_rzK21XRtSXdzCQvTTyUjoct7?usp=sharing" target="_blank">12/7/24: Birds Hill Trail</a>
+      <p>December 7, 2024 — Birds Hill Nature Area.</p>
+      <p>Length: 4.5 mile</p>
+    </div>
   </div>
 
-  <!-- Add more weeks here -->
+  <div class="week-item">
+    <div class="week-photo">
+      <img src="photos/week-0412.jpg" alt="Highland Trail">
+    </div>
+    <div class="week-info">
+      <a href="https://drive.google.com/drive/folders/1VruI-JkrJ7jp_hCyhfYAgDn_KTKDJLIQ?usp=sharing" target="_blank">11/23/24: Penosha Trail</a>
+      <p>November 23, 2024 — Brighton State Park.</p>
+      <p>Length: 5 mile</p>
+    </div>
+  </div>
+
+  <div class="week-item">
+    <div class="week-photo">
+      <img src="photos/week-0412.jpg" alt="Highland Trail">
+    </div>
+    <div class="week-info">
+      <a href="https://drive.google.com/drive/folders/1qTmspGu46ayDaBgNtVedAmHeRjh27i9J?usp=sharing" target="_blank">Previous</a>
+      <p>September–November 2024 — Various state parks near Ann Arbor.</p>
+    </div>
+  </div>
+
+</div>
+
+<section class="contact">
+  <p>📬 Contact us to join or share your photos:</p>
+  <p>
+    Email: <a href="mailto:liangkai@umich.edu">liangkai@umich.edu</a><br>
+    WeChat: <strong>Torres_kai</strong>
+  </p>
 </section>
 
 <footer>
