@@ -34,7 +34,7 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      height: 300px;
+      height: 500px;
       position: relative;
       color: white;
       display: flex;
@@ -86,13 +86,18 @@
       flex: 0 0 200px;
       height: 130px;
       overflow: hidden;
+      position: relative;
     }
 
     .week-photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .week-photo:hover img {
+      transform: scale(1.1);
     }
 
     .week-info {
