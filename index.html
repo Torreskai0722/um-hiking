@@ -29,6 +29,38 @@
       font-size: 1em;
     }
 
+    .hero {
+      background-image: url("photos/previous.JPG"); /* Adjust path if needed */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 300px;
+      position: relative;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero .overlay {
+      background: rgba(0, 0, 0, 0.4); /* darken the photo for text visibility */
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    .hero p {
+      margin-top: 10px;
+      font-size: 1.1em;
+    }
+
     .week-list {
       max-width: 900px;
       margin: 40px auto;
@@ -124,9 +156,11 @@
 </head>
 <body>
 
-<header>
-  <h1>UM Hiking Club</h1>
-  <p>Weekly Photo Gallery · University of Michigan, Ann Arbor</p>
+<header class="hero">
+  <div class="overlay">
+    <h1>UM Hiking Group</h1>
+    <p>Weekly Photo Gallery · University of Michigan, Ann Arbor</p>
+  </div>
 </header>
 
 <div class="week-list">
@@ -213,7 +247,7 @@
 
   <div class="week-item">
     <div class="week-photo">
-      <img src="photos/12:7.HEIC" alt="Highland Trail">
+      <img src="photos/12:7.jpg" alt="Highland Trail">
     </div>
     <div class="week-info">
       <a href="https://drive.google.com/drive/folders/1yp82SwD_rzK21XRtSXdzCQvTTyUjoct7?usp=sharing" target="_blank">12/7/24: Birds Hill Trail</a>
