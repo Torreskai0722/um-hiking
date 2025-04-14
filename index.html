@@ -117,6 +117,41 @@
       color: #555;
     }
 
+    /* Lightbox viewer overlay */
+    #lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    #lightbox:target {
+      display: flex;
+    }
+
+    /* Optional close button */
+    #lightbox .close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+    }
+
+
     .contact {
       text-align: center;
       margin: 40px 20px;
@@ -159,6 +194,7 @@
     }
   </style>
 </head>
+
 <body>
 
 <header class="hero">
@@ -295,6 +331,24 @@
 <footer>
   &copy; 2025 UM Hiking Club · Maintained by U-M Students
 </footer>
+
+<!-- Lightbox HTML -->
+<div id="lightbox">
+  <span class="close" onclick="document.getElementById('lightbox').style.display='none'">&times;</span>
+  <img id="lightbox-img" src="" alt="Zoomed Preview">
+</div>
+
+<!-- Lightbox Script -->
+<script>
+  document.querySelectorAll('.week-photo img').forEach(img => {
+    img.addEventListener('click', () => {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = img.src;
+      lightbox.style.display = 'flex';
+    });
+  });
+</script>
 
 </body>
 </html>
