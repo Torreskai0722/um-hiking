@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -437,14 +437,14 @@
   &copy; 2025 UM Hiking Club · Maintained by U-M Students
 </footer>
 
-<!-- Lightbox HTML -->
-<div id="lightbox">
+Lightbox HTML -->
+<!-- <div id="lightbox">
   <span class="close" onclick="document.getElementById('lightbox').style.display='none'">&times;</span>
   <img id="lightbox-img" src="" alt="Zoomed Preview">
-</div>
+</div> -->
 
 <!-- Lightbox Script -->
-<script>
+<!-- <script>
   document.querySelectorAll('.week-photo img').forEach(img => {
     img.addEventListener('click', () => {
       const lightbox = document.getElementById('lightbox');
@@ -456,4 +456,323 @@
 </script>
 
 </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UM Hiking Group</title>
+  <meta name="description" content="Weekly photo gallery for the UM Hiking Group — trails, distances, albums, and sign‑up." />
+  <meta property="og:title" content="UM Hiking Group — Weekly Photo Gallery" />
+  <meta property="og:description" content="Browse photos from this hike and previous outings. Join us for the next one!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="photos/header.JPG" />
+  <style>
+    :root {
+      --blue: #00274c;
+      --maize: #ffcb05;
+      --bg: #f7f7f9;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --radius: 14px;
+      --shadow: 0 10px 20px rgba(0,0,0,.06);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: var(--bg);
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Top bar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 16px;
+      background: var(--blue);
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .2px; }
+    .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--maize); display: inline-block; }
+    .topbar a.btn { color: var(--blue); background: #fff; border-radius: 999px; padding: 8px 14px; font-weight: 600; box-shadow: var(--shadow); }
+    .topbar a.btn:hover{ background: #f2f2f2; text-decoration: none; }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 46vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #fff;
+      background: url("photos/header.JPG") center/cover no-repeat;
+      isolation: isolate;
+    }
+    .hero::after {
+      content: "";
+      position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.55)); z-index: -1;
+    }
+    .hero h1 { margin: 0; font-size: clamp(1.8rem, 3.5vw, 3rem); letter-spacing: .3px; }
+    .hero p { margin: 8px 0 0; opacity: .95; }
+    .hero .cta { margin-top: 16px; display: inline-flex; gap: 10px; flex-wrap: wrap; }
+    .cta .pill {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; background: #fff; color: var(--blue); font-weight: 700; box-shadow: var(--shadow);
+    }
+    .cta .pill.secondary { background: rgba(255,255,255,.12); color: #fff; outline: 1px solid rgba(255,255,255,.35); }
+
+    /* Toolbar */
+    .toolbar { max-width: 1100px; margin: 24px auto 6px; padding: 0 16px; display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; }
+    .toolbar input[type="search"], .toolbar select, .toolbar label.pill {
+      width: 100%; height: 40px; border-radius: 999px; padding: 0 14px; border: 1px solid #e5e7eb; background: #fff; box-shadow: var(--shadow);
+    }
+    .toolbar label.pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding-right: 12px; }
+    .toolbar label.pill input { accent-color: var(--blue); }
+
+    /* Grid of events */
+    .container { max-width: 1100px; margin: 10px auto 40px; padding: 0 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: clip;
+      box-shadow: var(--shadow);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(0,0,0,.08); }
+
+    .thumb { position: relative; aspect-ratio: 16/9; background: #e5e7eb; overflow: hidden; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+    .card:hover .thumb img { transform: scale(1.03); }
+    .badge {
+      position: absolute; left: 10px; bottom: 10px; padding: 4px 10px; border-radius: 999px; background: rgba(0,0,0,.6); color: #fff; font-size: 12px; backdrop-filter: blur(4px);
+    }
+
+    .body { padding: 14px; display: grid; gap: 8px; }
+    .title { font-weight: 800; font-size: 1.05rem; letter-spacing: .2px; line-height: 1.35; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px 12px; color: var(--muted); font-size: .94rem; }
+    .meta .chip { display: inline-flex; align-items: center; gap: 6px; }
+    .meta .chip svg { width: 16px; height: 16px; }
+
+    .actions { display: flex; gap: 10px; margin-top: 4px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 10px; background: #f3f4f6; border: 1px solid #e5e7eb; font-weight: 600; color: var(--text);
+    }
+    .btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* Contact & footer */
+    .contact { text-align: center; margin: 36px 16px; color: var(--text); }
+    .contact a { font-weight: 700; }
+    footer { text-align: center; color: var(--muted); padding: 24px 10px; }
+
+    /* Lightbox */
+    .lightbox { position: fixed; inset: 0; display: none; place-items: center; background: rgba(0,0,0,.88); z-index: 100; }
+    .lightbox.is-open { display: grid; }
+    .lightbox img { max-width: min(92vw, 1400px); max-height: 90vh; border-radius: 12px; box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 30px 60px rgba(0,0,0,.5); }
+    .lightbox .close { position: absolute; top: 16px; right: 18px; font-size: 28px; color: #fff; background: rgba(0,0,0,.35); border-radius: 999px; width: 40px; height: 40px; display: grid; place-items: center; cursor: pointer; }
+
+    @media (max-width: 680px){
+      .toolbar { grid-template-columns: 1fr 1fr; }
+      .toolbar label.pill { grid-column: 1/-1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky top bar -->
+  <header class="topbar" role="banner">
+    <div class="brand" aria-label="UM Hiking Group">
+      <span class="dot" aria-hidden="true"></span>
+      <span>UM Hiking Group</span>
+    </div>
+    <nav aria-label="Primary">
+      <a class="btn" href="#events">View photos</a>
+      <a class="btn" href="https://docs.google.com/spreadsheets/d/11GDfX2Gs5idL_-BmzHFJ7-ca8fU0UQcTFD2qwlmomNI/edit?usp=sharing" target="_blank" rel="noopener">Sign up</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" role="img" aria-label="UM hikers on a forest trail in Michigan" id="hero">
+    <div>
+      <h1>Weekly Photo Gallery</h1>
+      <p>University of Michigan · Ann Arbor</p>
+      <div class="cta">
+        <a class="pill" href="https://docs.google.com/spreadsheets/d/11GDfX2Gs5idL_-BmzHFJ7-ca8fU0UQcTFD2qwlmomNI/edit?usp=sharing" target="_blank" rel="noopener">🥾 Join next hike</a>
+        <a class="pill secondary" href="#events">📷 See latest photos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Toolbar: search / filter -->
+  <div class="toolbar" role="region" aria-label="Filters">
+    <input id="q" type="search" placeholder="Search title or park…" aria-label="Search events" />
+    <select id="year" aria-label="Filter by year">
+      <option value="">All years</option>
+      <option>2025</option>
+      <option>2024</option>
+    </select>
+    <label class="pill" for="hasPhotos"><input id="hasPhotos" type="checkbox" /> Only with photo albums</label>
+  </div>
+
+  <!-- Events grid -->
+  <main class="container" id="events">
+    <div id="grid" class="grid" aria-live="polite"></div>
+  </main>
+
+  <!-- Contact -->
+  <section class="contact" aria-label="Contact">
+    <p>📬 Contact us to join or share your photos:</p>
+    <p>Email: <a href="mailto:liangkai@umich.edu">liangkai@umich.edu</a> · WeChat: <strong>Torres_kai</strong></p>
+  </section>
+
+  <footer>&copy; 2025 UM Hiking Club · Maintained by U‑M Students</footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <button class="close" aria-label="Close" type="button">✕</button>
+    <img id="lightbox-img" alt="Zoomed preview" />
+  </div>
+
+  <script>
+    // --- Data -----------------------------------------------------------------
+    const EVENTS = [
+      { date: '2025-09-06', title: 'Chain of Lakes Trail', park: 'Pinckney State Park', length: '6 mile', photo: 'photos/9:6:25.jpg', album: 'https://drive.google.com/drive/folders/1WQAmOSueBZLnXkQyYvBIpvCIV2QsZ4HU?usp=sharing' },
+      { date: '2025-08-02', title: 'Crooked Lake Trail', park: 'Pinckney State Park', length: '4.4 mile', photo: 'photos/08:02:25.JPG', album: '' },
+      { date: '2025-07-05', title: 'Island Lake Blue Trail Loop', park: 'Island Lake State Park', length: '9 mile', photo: 'photos/07:05:25.jpg', album: '' },
+      { date: '2025-06-07', title: 'Gosling Lake Trail Loop', park: 'Pinckney State Park', length: '9.5 km', photo: 'photos/06:07.jpg', album: 'https://drive.google.com/drive/folders/1Ko1jq9HckyAcJHrNwabnK9A365QB0UO7?usp=sharing' },
+      { date: '2025-05-24', title: 'Pinckney State Recreation Area North Loop', park: 'Pinckney State Park', length: '10.1 km', photo: 'photos/05:24.jpg', album: 'https://drive.google.com/drive/folders/1PZZ6WCVGnHrSDgYSfRvE1l2dFJLcYxo8?usp=sharing' },
+      { date: '2025-05-10', title: 'Chain of Lakes Trail', park: 'Pinckney State Park', length: '6.5 mile', photo: 'photos/5:10.jpg', album: '' },
+      { date: '2025-04-20', title: 'Marsh, River, Red & Blue Trails Loop', park: 'Proud Lake Recreation Area', length: '5.6 mile', photo: 'photos/4:20.jpg', album: 'https://drive.google.com/drive/folders/131nWFJXU1lUI3gPjVHXFu3y8BqUt1CL6?usp=sharing' },
+      { date: '2025-04-12', title: 'Haven Hill Lake Trail', park: 'Highland State Park', length: '6.6 mile', photo: 'photos/4:12.JPG', album: 'https://drive.google.com/drive/folders/1cTfIm8-JgT7wx3wYTeDN9qMUqvqwPvte?usp=sharing' },
+      { date: '2025-04-06', title: 'Ann Arbor Ramble Trail', park: 'Ann Arbor Ramble Trail', length: '6 mile', photo: 'photos/4:6.jpg', album: 'https://drive.google.com/drive/folders/1mE8kt5VMucW887EB-ail8woPmydQxfyP?usp=sharing' },
+      { date: '2025-03-29', title: 'Kent Lake Loop', park: 'Kensington Metro Park', length: '8.5 mile', photo: 'photos/3:29.jpg', album: 'https://drive.google.com/drive/folders/1AYnurnzURI7ReapPf2giHaebYj9RESWO?usp=sharing' },
+      { date: '2025-03-22', title: 'Gosling Lake Trail', park: 'Pinckney State Park', length: '9.5 km', photo: 'photos/3:22.jpg', album: 'https://drive.google.com/drive/folders/1Oig0s4EvgJjiiHAxC2J09DN6mMo8uIlR?usp=sharing' },
+      { date: '2025-03-08', title: 'Crooked Lake Trail', park: 'Pinckney State Park', length: '4.4 mile', photo: 'photos/3:8.jpg', album: 'https://drive.google.com/drive/folders/1fUrA9mDc3pecb5u7D5Duaolg_NdpCv_e?usp=sharing' },
+      { date: '2025-02-22', title: 'Chain of Lakes Trail', park: 'Pinckney State Park', length: '10 km', photo: 'photos/2:22.jpg', album: 'https://drive.google.com/drive/folders/1-dSDWZZcmaNIwXuZzEz2GE0U5Qn1uK-g?usp=sharing' },
+      { date: '2025-01-11', title: 'Chain of Lakes Trail', park: 'Pinckney State Park', length: '8 mile', photo: 'photos/1:11.jpg', album: 'https://drive.google.com/drive/folders/1q_EerzQpGeczPx1aIBT2UUu83WVrerEk?usp=sharing' },
+      { date: '2024-12-07', title: 'Birds Hill Trail', park: 'Birds Hill Nature Area', length: '4.5 mile', photo: 'photos/12:7.jpg', album: 'https://drive.google.com/drive/folders/1yp82SwD_rzK21XRtSXdzCQvTTyUjoct7?usp=sharing' },
+      { date: '2024-11-23', title: 'Penosha Trail', park: 'Brighton State Park', length: '5 mile', photo: 'photos/11:23.JPG', album: 'https://drive.google.com/drive/folders/1VruI-JkrJ7jp_hCyhfYAgDn_KTKDJLIQ?usp=sharing' },
+      { date: '2024-10-01', title: 'Previous (Sep–Nov 2024)', park: 'Various state parks near Ann Arbor', length: 'Archive', photo: 'photos/previous.jpeg', album: 'https://drive.google.com/drive/folders/1qTmspGu46ayDaBgNtVedAmHeRjh27i9J?usp=sharing' }
+    ];
+
+    // --- Helpers --------------------------------------------------------------
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+    const toMonthDay = iso => new Date(iso + 'T12:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric'});
+    const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+
+    // --- Render ---------------------------------------------------------------
+    const grid = $('#grid');
+    const data = [...EVENTS].sort((a,b) => b.date.localeCompare(a.date));
+
+    function render(list){
+      grid.innerHTML = '';
+      list.forEach(ev => {
+        const hasAlbum = ev.album && ev.album.trim().length > 0;
+        const anchor = `${new Date(ev.date).getFullYear()}-${slug(ev.title)}`;
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.setAttribute('data-title', ev.title.toLowerCase());
+        card.setAttribute('data-park', ev.park.toLowerCase());
+        card.setAttribute('data-year', new Date(ev.date).getFullYear());
+        card.id = anchor;
+        card.innerHTML = `
+          <div class="thumb">
+            <img src="${ev.photo}" alt="${ev.title} — ${ev.park} (${toMonthDay(ev.date)})" loading="lazy" decoding="async" data-lightbox />
+            <span class="badge">${toMonthDay(ev.date)}</span>
+          </div>
+          <div class="body">
+            <div class="title">${hasAlbum ? `<a href="${ev.album}" target="_blank" rel="noopener">${ev.title}</a>` : ev.title}</div>
+            <div class="meta">
+              <span class="chip" title="Park">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                ${ev.park}
+              </span>
+              <span class="chip" title="Length">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h16"/></svg>
+                ${ev.length}
+              </span>
+            </div>
+            <div class="actions">
+              <button class="btn primary" ${!hasAlbum ? 'disabled' : ''} onclick="${hasAlbum ? `window.open('${ev.album}','_blank')` : ''}">Album</button>
+              <a class="btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.park)}" target="_blank" rel="noopener">Map</a>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    // initial render
+    render(data);
+
+    // --- Filters --------------------------------------------------------------
+    const q = $('#q');
+    const year = $('#year');
+    const hasPhotos = $('#hasPhotos');
+
+    function applyFilters(){
+      const query = q.value.trim().toLowerCase();
+      const yr = year.value;
+      const onlyWithAlbums = hasPhotos.checked;
+
+      const filtered = data.filter(ev => {
+        const matchesQuery = !query || ev.title.toLowerCase().includes(query) || ev.park.toLowerCase().includes(query);
+        const matchesYear = !yr || String(new Date(ev.date).getFullYear()) === yr;
+        const matchesAlbum = !onlyWithAlbums || (ev.album && ev.album.trim().length > 0);
+        return matchesQuery && matchesYear && matchesAlbum;
+      });
+      render(filtered);
+    }
+
+    [q, year, hasPhotos].forEach(el => el.addEventListener('input', applyFilters));
+
+    // --- Lightbox -------------------------------------------------------------
+    const lb = $('#lightbox');
+    const lbImg = $('#lightbox-img');
+    const lbClose = lb.querySelector('.close');
+
+    function openLightbox(src, alt){
+      lbImg.src = src; lbImg.alt = alt || '';
+      lb.classList.add('is-open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(){
+      lb.classList.remove('is-open');
+      lb.setAttribute('aria-hidden', 'true');
+      lbImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('click', (e) => {
+      const t = e.target;
+      if (t.matches('[data-lightbox]')) {
+        openLightbox(t.src, t.alt);
+      }
+      if (t === lb || t === lbClose) {
+        closeLightbox();
+      }
+    });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+    // --- Nice-to-haves --------------------------------------------------------
+    // Focus the search box when the user presses "/"
+    window.addEventListener('keydown', (e) => { if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); } });
+  </script>
+</body>
 </html>
+
